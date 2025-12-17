@@ -66,15 +66,14 @@ We implemented the project on **real hardware** and also built a **simulator** f
 ## Code Example
 
 ### Transmitter
-```cpp
+```` ```cpp ```` 
 if (digitalRead(5) == HIGH) {
   Serial.println("B2");
   digitalWrite(3, HIGH); delay(300);
   digitalWrite(3, LOW);  delay(300);
 }
-
 ### Reciever
-```cpp
+```` ```cpp ```` 
 long t = 0;
 while (digitalRead(sensor) == LOW) {
   delay(1);
@@ -99,7 +98,7 @@ else if (t > 550 && t < 650) {
   delay(2000); 
   digitalWrite(blue,LOW); 
 }
-
+---
 ### Simulator
 - A software-based simulator replicates button presses and pulse-duration signals.  
 - Helps verify decoding logic without physical Arduino boards.  
