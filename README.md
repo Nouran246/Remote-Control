@@ -66,21 +66,21 @@ We implemented the project on **real hardware** and also built a **simulator** f
 ## Code Example
 
 ### Transmitter
-```` ```cpp ```` 
+```
 if (digitalRead(5) == HIGH) {
   Serial.println("B2");
   digitalWrite(3, HIGH); delay(300);
   digitalWrite(3, LOW);  delay(300);
 }
-```` ``` ````
+````
 ### Reciever
-```` ```cpp ```` 
+```` 
 long t = 0;
 while (digitalRead(sensor) == LOW) {
   delay(1);
   t = t + 1;
 }
-```` ``` ````
+
 // Button 1 = RED
 if (t > 80 && t < 120) { 
   digitalWrite(red,HIGH); 
@@ -99,6 +99,8 @@ else if (t > 550 && t < 650) {
   delay(2000); 
   digitalWrite(blue,LOW); 
 }
+````
+
 ---
 ### Simulator
 - A software-based simulator replicates button presses and pulse-duration signals.  
