@@ -73,4 +73,63 @@ if (digitalRead(5) == HIGH) {
   digitalWrite(3, LOW);  delay(300);
 }
 
+### Reciever
+```cpp
+long t = 0;
+while (digitalRead(sensor) == LOW) {
+  delay(1);
+  t = t + 1;
+}
+
+// Button 1 = RED
+if (t > 80 && t < 120) { 
+  digitalWrite(red,HIGH); 
+  delay(2000); 
+  digitalWrite(red,LOW); 
+}
+// Button 2 = GREEN
+else if (t > 250 && t < 350) { 
+  digitalWrite(green,HIGH); 
+  delay(2000); 
+  digitalWrite(green,LOW); 
+}
+// Button 3 = BLUE
+else if (t > 550 && t < 650) { 
+  digitalWrite(blue,HIGH); 
+  delay(2000); 
+  digitalWrite(blue,LOW); 
+}
+
+### Simulator
+- A software-based simulator replicates button presses and pulse-duration signals.  
+- Helps verify decoding logic without physical Arduino boards.  
+- Outputs simulated LED states and serial debug messages.  
+
+---
+
+## Hardware Implementation
+- Fully tested on real Arduino hardware.  
+- LEDs correctly light up based on pulse-duration signals from each button.  
+- Works reliably with three buttons and RGB LEDs.
+
+---
+
+## Future Improvements
+- Upgrade to **IRremote library** for standard IR protocol support.  
+- Expand to more commands using binary or NEC codes.  
+- Improve simulator UI for easier visualization of signals.  
+- Optimize pulse-duration ranges for more reliable decoding.
+
+---
+
+## Acknowledgements
+- Arduino documentation and tutorials on digital I/O.  
+- KY-033 sensor datasheets and examples.  
+- Online resources for timing-based signal handling and debugging.
+
+---
+
+## Authors
+- **Nouran Hassan Ahmed** (`nouran246`)  
+- **Rowlkh** (`rowlkh`)
 
