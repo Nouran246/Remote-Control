@@ -132,6 +132,6 @@ else if (t > 550 && t < 650) {
 ---
 
 ## Authors
-- **Roaa Khaled** (@rowlkh)
-- **Nouran Hassan** (@nouran246)  
+- [@Roaa Khaled](https://github.com/Rowlkh)
+- [@Nouran Hassan](https://github.com/nouran246)
 
