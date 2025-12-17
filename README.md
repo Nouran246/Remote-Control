@@ -72,6 +72,7 @@ if (digitalRead(5) == HIGH) {
   digitalWrite(3, HIGH); delay(300);
   digitalWrite(3, LOW);  delay(300);
 }
+```` ``` ````
 ### Reciever
 ```` ```cpp ```` 
 long t = 0;
@@ -79,7 +80,7 @@ while (digitalRead(sensor) == LOW) {
   delay(1);
   t = t + 1;
 }
-
+```` ``` ````
 // Button 1 = RED
 if (t > 80 && t < 120) { 
   digitalWrite(red,HIGH); 
