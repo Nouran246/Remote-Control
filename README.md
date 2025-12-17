@@ -132,6 +132,6 @@ else if (t > 550 && t < 650) {
 ---
 
 ## Authors
-- **Nouran Hassan Ahmed** (`nouran246`)  
-- **Rowlkh** (`rowlkh`)
+- **Roaa Khaled** (@rowlkh)
+- **Nouran Hassan** (@nouran246)  
 
