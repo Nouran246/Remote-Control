@@ -21,7 +21,7 @@ We implemented the project on **real hardware** and also built a **simulator** f
 ## Hardware Setup
 
 ### Transmitter
-- Push buttons connected to digital input pins (e.g., pins 4, 5, 6).  
+- Push buttons connected to digital input pins (e.g., pins 4, 5, 6).
 - LED connected to digital output pin (e.g., pin 3) to visualize signals.  
 - Arduino reads button presses and generates different pulse durations for each command.
 
@@ -67,37 +67,84 @@ We implemented the project on **real hardware** and also built a **simulator** f
 
 ### Transmitter
 ```
-if (digitalRead(5) == HIGH) {
-  Serial.println("B2");
-  digitalWrite(3, HIGH); delay(300);
-  digitalWrite(3, LOW);  delay(300);
+void setup() {
+  pinMode(3, OUTPUT);
+  pinMode(4, INPUT);
+  pinMode(5, INPUT);
+  pinMode(6, INPUT);
+  Serial.begin(9600);
+}
+
+void loop() {
+  // Button 1 - Single 200ms pulse
+  if (digitalRead(4) == HIGH) {
+    Serial.println("B1 - 200ms");
+    digitalWrite(3, HIGH);
+    delay(200);
+    digitalWrite(3, LOW);
+    while(digitalRead(4) == HIGH);
+  }
+  
+  // Button 2 - Single 400ms pulse  
+  if (digitalRead(5) == HIGH) {
+    Serial.println("B2 - 400ms");
+    digitalWrite(3, HIGH);
+    delay(400);
+    digitalWrite(3, LOW);
+    while(digitalRead(5) == HIGH);
+  }
+  
+  // Button 3 - Single 600ms pulse
+  if (digitalRead(6) == HIGH) {
+    Serial.println("B3 - 600ms");
+    digitalWrite(3, HIGH);
+    delay(600);
+    digitalWrite(3, LOW);
+    while(digitalRead(6) == HIGH);
+  }
 }
 ````
 ### Reciever
 ```` 
-long t = 0;
-while (digitalRead(sensor) == LOW) {
-  delay(1);
-  t = t + 1;
+void setup() {
+  pinMode(2, INPUT);
+  pinMode(3, OUTPUT);  // Red
+  pinMode(4, OUTPUT);  // Green
+  pinMode(5, OUTPUT);  // Blue
+  Serial.begin(9600);
+  Serial.println("READY");
 }
 
-// Button 1 = RED
-if (t > 80 && t < 120) { 
-  digitalWrite(red,HIGH); 
-  delay(2000); 
-  digitalWrite(red,LOW); 
-}
-// Button 2 = GREEN
-else if (t > 250 && t < 350) { 
-  digitalWrite(green,HIGH); 
-  delay(2000); 
-  digitalWrite(green,LOW); 
-}
-// Button 3 = BLUE
-else if (t > 550 && t < 650) { 
-  digitalWrite(blue,HIGH); 
-  delay(2000); 
-  digitalWrite(blue,LOW); 
+void loop() {
+  if (digitalRead(2) == LOW) {
+    unsigned long start = millis();
+    
+    // Wait for signal to end (with timeout)
+    while(digitalRead(2) == LOW && millis() - start < 2000);
+    
+    unsigned long pulseTime = millis() - start;
+    
+    Serial.print("Got: ");
+    Serial.print(pulseTime);
+    Serial.println(" ms");
+    
+    // NON-OVERLAPPING ranges:
+    if (pulseTime > 150 && pulseTime < 250) {    // ~200ms
+      Serial.println("B1 - RED");
+      digitalWrite(3, HIGH); delay(2000); digitalWrite(3, LOW);
+    }
+    else if (pulseTime > 350 && pulseTime < 450) { // ~400ms
+      Serial.println("B2 - GREEN");
+      digitalWrite(4, HIGH); delay(2000); digitalWrite(4, LOW);
+    }
+    else if (pulseTime > 550 && pulseTime < 650) { // ~600ms
+      Serial.println("B3 - BLUE");
+      digitalWrite(5, HIGH); delay(2000); digitalWrite(5, LOW);
+    }
+    else {
+      Serial.println("Noise - Ignored");
+    }
+  }
 }
 ````
 
